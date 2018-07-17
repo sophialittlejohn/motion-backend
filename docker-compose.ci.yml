@@ -1,0 +1,14 @@
+version: '2'
+services:
+  database:
+    image: postgres:9.6.1
+    restart: always
+    env_file: dev.env
+
+  app:
+    image: "${CI_PIPELINE_ID}:${CI_BUILD_REF_NAME}"
+    env_file: dev.env
+    volumes:
+      - ./coverage:/app/local_coverage_report
+    depends_on:
+      - database
